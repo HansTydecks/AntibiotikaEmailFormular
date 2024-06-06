@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontaktformular</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #3fa428;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #contact-form-container {
+            text-align: center;
+            margin-top: 20px;
+            width: 100%;
+        }
+        #contact-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        #contact-form h2 {
+            text-align: center;
+        }
+        #contact-form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        #contact-form input[type="text"],
+        #contact-form input[type="email"],
+        #contact-form textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #contact-form input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        #contact-form button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            display: block;
+            width: 100%;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #contact-form button:disabled {
+            background-color: #cccccc;
+        }
+        #contact-form a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        #contact-form a:hover {
+            text-decoration: underline;
+        }
+        #info-text {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        #footer {
+            margin-top: 20px;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function() {
+          emailjs.init('YOUR_USER_ID');
+       })();
+
+       function generateText() {
+           const name = document.getElementById('name').value;
+           const email = document.getElementById('email').value;
+           const functionValue = document.getElementById('function').value;
+           const location = document.getElementById('location').value;
+           const test = document.getElementById('test').value;
+           const options = [];
+           for (let i = 1; i <= 8; i++) {
+               if (document.getElementById('option' + i).checked) {
+                   options.push("Option " + i + " wurde ausgewählt.");
+               }
+           }
+
+           let generatedText = `Name: ${name}\nEmail: ${email}\nFunktion: ${functionValue}\nOrt: ${location}\nTest: ${test}\n\n${options.join('\n')}`;
+
+           document.getElementById('message').value = generatedText;
+       }
+
+       function sendEmail() {
+           const message = document.getElementById('message').value;
+
+           emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+               message: message,
+               to_email: 'max.mustermann@gmail.com'
+           })
+           .then((response) => {
+               alert('Email erfolgreich gesendet!');
+           }, (error) => {
+               alert('Fehler beim Senden der Email: ' + error.text);
+           });
+       }
+
+       function toggleSendButton() {
+           const privacyCheck = document.getElementById('privacy-check').checked;
+           document.getElementById('send-button').disabled = !privacyCheck;
+       }
+    </script>
+</head>
+<body>
+    <div id="contact-form-container">
+        <img src="URL_ZU_IHREM_LOGO" alt="Logo" width="200"><br>
+        <form id="contact-form">
+            <h2>Kontaktformular</h2>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br><br>
+
+            <label for="function">Funktion:</label>
+            <input type="text" id="function" name="function" required><br><br>
+
+            <label for="location">Ort:</label>
+            <input type="text" id="location" name="location" required><br><br>
+
+            <label for="test">Test:</label>
+            <input type="text" id="test" name="test" required><br><br>
+
+            <p><strong>Für diese Themen interessiere ich mich:</strong></p>
+            <label><input type="checkbox" id="option1"> Option 1</label><br>
+            <label><input type="checkbox" id="option2"> Option 2</label><br>
+            <label><input type="checkbox" id="option3"> Option 3</label><br>
+            <label><input type="checkbox" id="option4"> Option 4</label><br>
+            <label><input type="checkbox" id="option5"> Option 5</label><br>
+            <label><input type="checkbox" id="option6"> Option 6</label><br>
+            <label><input type="checkbox" id="option7"> Option 7</label><br>
+            <label><input type="checkbox" id="option8"> Option 8</label><br><br>
+
+            <button type="button" onclick="generateText()">Text generieren</button><br><br>
+
+            <label for="message">Nachricht:</label><br>
+            <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
+
+            <label><input type="checkbox" id="privacy-check" onclick="toggleSendButton()"> 
+                Ich stimme den 
+                <a href="LINK_ZU_IHREN_DATENSCHUTZBESTIMMUNGEN" target="_blank">Datenschutzbestimmungen</a> 
+                zu
+            </label><br><br>
+
+            <button type="button" id="send-button" onclick="sendEmail()" disabled>Nachricht senden</button>
+        </form>
+        <div id="info-text">
+            <p>Für weitere Informationen besuchen Sie bitte unsere <a href="LINK_ZU_WEITEREN_INFORMATIONEN" target="_blank">Informationsseite</a>.</p>
+        </div>
+        <div id="footer">
+            <p>Kontaktieren Sie uns:</p>
+            <p>Email: kontakt@beispiel.de</p>
+            <p>Telefon: +49 123 456 789</p>
+            <p>Adresse: Musterstraße 1, 12345 Musterstadt</p>
+        </div>
+    </div>
+</body>
+</html>
