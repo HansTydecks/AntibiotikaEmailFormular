@@ -88,21 +88,54 @@
           emailjs.init('YOUR_USER_ID');
        })();
 
+       function generateOptionText(optionId) {
+           switch (optionId) {
+               case 'option1':
+                   return "Das entlastet unser strapaziertes Pflegesystem.";
+               case 'option2':
+                   return "Das schützt unser Grundwasser.";
+                case 'option3':
+                   return "Das führt dazu, dass Millionen Tiere weniger gequält werden.";
+               case 'option4':
+                   return "Das hilft unserer Wirtschaft.";
+               case 'option5':
+                   return "Wir haben es demokratisch beschlossen und was man versprochen hat, muss man halten.";
+               case 'option6':
+                   return "Das Umsetzen unserer Wahlversprechen ist der beste Wahlkampf, den wir machen können.";
+               case 'option7':
+                   return "Das rettet viele der fünf Millionen Menschen die derzeit jedes Jahr durch multiresistente Keime sterben.";
+               case 'option8':
+                   return "Damit Forschungsgelder sinnvoll eingesetzt werden können.";
+               case 'option9':
+                   return "Es ist der Wille der Bevölkerung. Ihn zu ignorieren schadet uns!";
+
+               // Fügen Sie weitere cases für zusätzliche Optionen hinzu
+               default:
+                   return ""; // Standardwert, falls keine Option ausgewählt ist
+           }
+       }
+
+       // Funktion, um den generierten Text zu aktualisieren
        function generateText() {
            const name = document.getElementById('name').value;
            const email = document.getElementById('email').value;
            const functionValue = document.getElementById('function').value;
            const location = document.getElementById('location').value;
-           const test = document.getElementById('test').value;
-           const options = [];
-           for (let i = 1; i <= 8; i++) {
-               if (document.getElementById('option' + i).checked) {
-                   options.push("Option " + i + " wurde ausgewählt.");
+           
+		let generatedText = "Lieber Cem,\nich möchte, dass Du den Kolationsvertrag umsetzt und den Antibiotikamissbrauch in der Massentierhaltung beendest.\n"
+           //let generatedText = `Name: ${name}\nFunktion: ${functionValue}\nOrt: ${location}\nEmail: ${email}\n\n`;
+
+           // Durchlaufe alle Optionen und füge den Textbaustein für jede ausgewählte Option hinzu
+           for (let i = 1; i <= 9; i++) {
+               const optionId = 'option' + i;
+               if (document.getElementById(optionId).checked) {
+                   generatedText += generateOptionText(optionId) + "\n";
                }
            }
+		generatedText += "\nIch hoffe Du hältst unser Wort,\nfreundliche Grüße\n";
+		generatedText += name +"\n" + functionValue + "\n" + location + "\n" + email + "\n";
 
-           let generatedText = `Name: ${name}\nEmail: ${email}\nFunktion: ${functionValue}\nOrt: ${location}\nTest: ${test}\n\n${options.join('\n')}`;
-
+           // Aktualisiere das große Textfeld mit dem generierten Text
            document.getElementById('message').value = generatedText;
        }
 
@@ -130,13 +163,10 @@
     <div id="contact-form-container">
         <img src="URL_ZU_IHREM_LOGO" alt="Logo" width="200"><br>
         <form id="contact-form">
-            <h2>Kontaktformular</h2>
+            <h2>Deine Nachricht an Cem</h2>
 
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required><br><br>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required><br><br>
 
             <label for="function">Funktion:</label>
             <input type="text" id="function" name="function" required><br><br>
@@ -144,23 +174,25 @@
             <label for="location">Ort:</label>
             <input type="text" id="location" name="location" required><br><br>
 
-            <label for="test">Test:</label>
-            <input type="text" id="test" name="test" required><br><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br><br>
 
-            <p><strong>Für diese Themen interessiere ich mich:</strong></p>
-            <label><input type="checkbox" id="option1"> Option 1</label><br>
-            <label><input type="checkbox" id="option2"> Option 2</label><br>
-            <label><input type="checkbox" id="option3"> Option 3</label><br>
-            <label><input type="checkbox" id="option4"> Option 4</label><br>
-            <label><input type="checkbox" id="option5"> Option 5</label><br>
-            <label><input type="checkbox" id="option6"> Option 6</label><br>
-            <label><input type="checkbox" id="option7"> Option 7</label><br>
-            <label><input type="checkbox" id="option8"> Option 8</label><br><br>
+            <p><strong>Warum ich den Antiobiotikamissbrauch beenden will:</strong></p>
+            <label><input type="checkbox" id="option1"> Pflege entlasten</label><br>
+            <label><input type="checkbox" id="option2"> Grundwasser schützen</label><br>
+            <label><input type="checkbox" id="option3"> Tierquälerei beenden</label><br>
+            <label><input type="checkbox" id="option4"> Wirtschaft stärken</label><br>
+            <label><input type="checkbox" id="option5"> Demokratie erhalten</label><br>
+            <label><input type="checkbox" id="option6"> Wahlkampf unterstützen</label><br>
+            <label><input type="checkbox" id="option7"> Tote verhindern</label><br>
+            <label><input type="checkbox" id="option8"> Forschungsgelder sichern </label><br>
+            <label><input type="checkbox" id="option9"> Bevölkerungswillen respektieren</label><br><br>
+
 
             <button type="button" onclick="generateText()">Text generieren</button><br><br>
 
             <label for="message">Nachricht:</label><br>
-            <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
+            <textarea id="message" name="message" rows="15" cols="50" required></textarea><br><br>
 
             <label><input type="checkbox" id="privacy-check" onclick="toggleSendButton()"> 
                 Ich stimme den 
