@@ -85,7 +85,7 @@
     <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script type="text/javascript">
        (function() {
-          emailjs.init('YOUR_USER_ID');
+          emailjs.init('_BSqmMP9X7xQcOskb');
        })();
 
        function generateOptionText(optionId) {
@@ -142,9 +142,9 @@
        function sendEmail() {
            const message = document.getElementById('message').value;
 
-           emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+           emailjs.send('service_3mrcdph', 'template_csw5pmj', {
                message: message,
-               to_email: 'max.mustermann@gmail.com'
+               to_email: 'tydeckshans@gmail.com'
            })
            .then((response) => {
                alert('Email erfolgreich gesendet!');
