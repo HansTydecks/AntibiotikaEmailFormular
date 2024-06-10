@@ -142,10 +142,11 @@
        function sendEmail() {
 // Generate your custom message dynamically
 var customMessage = document.getElementById('message').value;
-
+var userEmail = document.getElementById('email').value;
 // Define your message content object
 var message = {
-  body: customMessage
+email: userEmail
+body: customMessage
 };
            //const message = document.getElementById('message').value;
 		
