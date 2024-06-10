@@ -141,12 +141,12 @@
 
        function sendEmail() {
 
-	       var message = {
-  to_email: 'tydeckshans@gmail.com',
-  subject: 'TEST2',
-  body: 'DIese Nachricht testet'
-};
-           //const message = document.getElementById('message').value;
+	       //var message = {
+  //to_email: 'tydeckshans@gmail.com',
+ // subject: 'TEST2',
+  //body: 'DIese Nachricht testet'
+//};
+           const message = document.getElementById('message').value;
 		
            emailjs.send('service_3mrcdph', 'template_csw5pmj', message)
            .then((response) => {
