@@ -140,12 +140,15 @@
        }
 
        function sendEmail() {
-           const message = document.getElementById('message').value;
 
-           emailjs.send('service_3mrcdph', 'template_csw5pmj', {
-               message: message,
-               to_email: 'tydeckshans@gmail.com'
-           })
+	       var message = {
+  to_email: 'tydeckshans@gmail.com',
+  subject: 'TEST2',
+  body: document.getElementById('message').value
+};
+           //const message = document.getElementById('message').value;
+		
+           emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', message)
            .then((response) => {
                alert('Email erfolgreich gesendet!');
            }, (error) => {
