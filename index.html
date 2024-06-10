@@ -140,13 +140,16 @@
        }
 
        function sendEmail() {
+// Generate your custom message dynamically
+var customMessage = document.getElementById('message').value;
 
-	       //var message = {
-  //to_email: 'tydeckshans@gmail.com',
- // subject: 'TEST2',
-  //body: 'DIese Nachricht testet'
-//};
-           const message = document.getElementById('message').value;
+// Define your message content object
+var message = {
+  to_email: 'tydeckshans@gmail.com',
+  subject: 'Your Subject Here',
+  body: customMessage
+};
+           //const message = document.getElementById('message').value;
 		
            emailjs.send('service_3mrcdph', 'template_csw5pmj', message)
            .then((response) => {
