@@ -10,7 +10,7 @@
             background-color: #3fa428;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             min-height: 100vh;
             margin: 0;
             padding: 20px;
@@ -18,8 +18,8 @@
         }
         #contact-form-container {
             text-align: center;
-            margin-top: 20px;
             width: 100%;
+            max-width: 500px;
         }
         #contact-form {
             background-color: white;
@@ -27,7 +27,6 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 400px;
             margin: 0 auto;
             text-align: left;
         }
@@ -41,11 +40,12 @@
         #contact-form input[type="text"],
         #contact-form input[type="email"],
         #contact-form textarea {
-            width: calc(100% - 22px);
+            width: 100%;
             padding: 10px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            box-sizing: border-box;
         }
         #contact-form input[type="checkbox"] {
             margin-right: 10px;
@@ -56,7 +56,6 @@
             border: none;
             padding: 10px 20px;
             text-align: center;
-            display: block;
             width: 100%;
             border-radius: 4px;
             cursor: pointer;
@@ -80,6 +79,28 @@
             margin-top: 20px;
             font-size: 14px;
             text-align: center;
+        }
+        @media (max-width: 768px) {
+            body {
+                align-items: flex-start;
+            }
+            #contact-form-container {
+                margin-top: 20px;
+            }
+            #contact-form textarea {
+                width: calc(100% - 20px); /* Adjust width for padding */
+            }
+        }
+        @media (max-width: 480px) {
+            #contact-form input[type="text"],
+            #contact-form input[type="email"],
+            #contact-form textarea {
+                width: calc(100% - 20px); /* Adjust width for padding */
+            }
+            #contact-form button {
+                padding: 10px;
+                font-size: 14px;
+            }
         }
     </style>
     <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
@@ -109,49 +130,41 @@
                case 'option9':
                    return "Es ist der Wille der Bevölkerung. Ihn zu ignorieren schadet uns!";
 
-               // Fügen Sie weitere cases für zusätzliche Optionen hinzu
                default:
-                   return ""; // Standardwert, falls keine Option ausgewählt ist
+                   return "";
            }
        }
 
-       // Funktion, um den generierten Text zu aktualisieren
        function generateText() {
            const name = document.getElementById('name').value;
            const email = document.getElementById('email').value;
            const functionValue = document.getElementById('function').value;
            const location = document.getElementById('location').value;
-           
-		let generatedText = "Lieber Cem,\nich möchte, dass Du den Kolationsvertrag umsetzt und den Antibiotikamissbrauch in der Massentierhaltung beendest.\n"
-           //let generatedText = `Name: ${name}\nFunktion: ${functionValue}\nOrt: ${location}\nEmail: ${email}\n\n`;
 
-           // Durchlaufe alle Optionen und füge den Textbaustein für jede ausgewählte Option hinzu
+           let generatedText = "Lieber Cem,\nich möchte, dass Du den Kolationsvertrag umsetzt und den Antibiotikamissbrauch in der Massentierhaltung beendest.\n";
+
            for (let i = 1; i <= 9; i++) {
                const optionId = 'option' + i;
                if (document.getElementById(optionId).checked) {
                    generatedText += generateOptionText(optionId) + "\n";
                }
            }
-		generatedText += "\nIch hoffe Du hältst unser Wort,\nfreundliche Grüße\n";
-		generatedText += name +"\n" + functionValue + "\n" + location + "\n" + email + "\n";
+           generatedText += "\nIch hoffe Du hältst unser Wort,\nfreundliche Grüße\n";
+           generatedText += name + "\n" + functionValue + "\n" + location + "\n" + email + "\n";
 
-           // Aktualisiere das große Textfeld mit dem generierten Text
            document.getElementById('message').value = generatedText;
        }
 
        function sendEmail() {
-// Generate your custom message dynamically
-var customMessage = document.getElementById('message').value;
-var userEmail = document.getElementById('email').value;
-var userName = document.getElementById('name').value;
-// Define your message content object
-var message = {
-email: userEmail,
-body: customMessage,
-name: userName
-};
-           //const message = document.getElementById('message').value;
-		
+           var customMessage = document.getElementById('message').value;
+           var userEmail = document.getElementById('email').value;
+           var userName = document.getElementById('name').value;
+           var message = {
+               email: userEmail,
+               body: customMessage,
+               name: userName
+           };
+
            emailjs.send('service_3mrcdph', 'template_csw5pmj', message)
            .then((response) => {
                alert('Email erfolgreich gesendet!');
@@ -168,7 +181,6 @@ name: userName
 </head>
 <body>
     <div id="contact-form-container">
-        <!--img src="URL_ZU_IHREM_LOGO" alt="Logo" width="200"><br-->
         <form id="contact-form">
             <h2>Deine Nachricht an Cem</h2>
 
@@ -194,7 +206,6 @@ name: userName
             <label><input type="checkbox" id="option7"> Tote verhindern</label><br>
             <label><input type="checkbox" id="option8"> Forschungsgelder sichern </label><br>
             <label><input type="checkbox" id="option9"> Bevölkerungswillen respektieren</label><br><br>
-
 
             <button type="button" onclick="generateText()">Text generieren</button><br><br>
 
