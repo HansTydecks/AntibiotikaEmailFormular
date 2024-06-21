@@ -88,14 +88,14 @@
                 margin-top: 20px;
             }
             #contact-form textarea {
-                width: calc(100% - 20px); /* Adjust width for padding */
+                width: 100%; /* Adjust width for padding */
             }
         }
         @media (max-width: 480px) {
             #contact-form input[type="text"],
             #contact-form input[type="email"],
             #contact-form textarea {
-                width: calc(100% - 20px); /* Adjust width for padding */
+                width: 100%; /* Adjust width for padding */
             }
             #contact-form button {
                 padding: 10px;
@@ -105,85 +105,77 @@
     </style>
     <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script type="text/javascript">
-	    
-    <meta property="og:title" content="Antibiotika beenden! Deine Nachricht an Cem">
-    <meta property="og:description" content="Sende eine persönliche Nachricht an Cem und unterstütze unsere Kampagne gegen Antibiotikamissbrauch in der Massentierhaltung.">
-    <meta property="og:image" content="logo_whatsapp.jpg">
-    <meta property="og:url" content="www.gruene-antibiotika-ag.de">
-    <meta property="og:type" content="article">
-	    
-       (function() {
-          emailjs.init('_BSqmMP9X7xQcOskb');
-       })();
+        (function() {
+            emailjs.init('_BSqmMP9X7xQcOskb');
+        })();
 
-       function generateOptionText(optionId) {
-           switch (optionId) {
-               case 'option1':
-                   return "Das entlastet unser strapaziertes Pflegesystem.";
-               case 'option2':
-                   return "Das schützt unser Grundwasser.";
+        function generateOptionText(optionId) {
+            switch (optionId) {
+                case 'option1':
+                    return "Das entlastet unser strapaziertes Pflegesystem.";
+                case 'option2':
+                    return "Das schützt unser Grundwasser.";
                 case 'option3':
-                   return "Das führt dazu, dass Millionen Tiere weniger gequält werden.";
-               case 'option4':
-                   return "Das hilft unserer Wirtschaft.";
-               case 'option5':
-                   return "Wir haben es demokratisch beschlossen und was man versprochen hat, muss man halten.";
-               case 'option6':
-                   return "Das Umsetzen unserer Wahlversprechen ist der beste Wahlkampf, den wir machen können.";
-               case 'option7':
-                   return "Das rettet viele der fünf Millionen Menschen die derzeit jedes Jahr durch multiresistente Keime sterben.";
-               case 'option8':
-                   return "Damit Forschungsgelder sinnvoll eingesetzt werden können.";
-               case 'option9':
-                   return "Es ist der Wille der Bevölkerung. Ihn zu ignorieren schadet uns!";
+                    return "Das führt dazu, dass Millionen Tiere weniger gequält werden.";
+                case 'option4':
+                    return "Das hilft unserer Wirtschaft.";
+                case 'option5':
+                    return "Wir haben es demokratisch beschlossen und was man versprochen hat, muss man halten.";
+                case 'option6':
+                    return "Das Umsetzen unserer Wahlversprechen ist der beste Wahlkampf, den wir machen können.";
+                case 'option7':
+                    return "Das rettet viele der fünf Millionen Menschen die derzeit jedes Jahr durch multiresistente Keime sterben.";
+                case 'option8':
+                    return "Damit Forschungsgelder sinnvoll eingesetzt werden können.";
+                case 'option9':
+                    return "Es ist der Wille der Bevölkerung. Ihn zu ignorieren schadet uns!";
+                default:
+                    return "";
+            }
+        }
 
-               default:
-                   return "";
-           }
-       }
+        function generateText() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const functionValue = document.getElementById('function').value;
+            const location = document.getElementById('location').value;
 
-       function generateText() {
-           const name = document.getElementById('name').value;
-           const email = document.getElementById('email').value;
-           const functionValue = document.getElementById('function').value;
-           const location = document.getElementById('location').value;
+            let generatedText = "Lieber Cem,\nich möchte, dass Du den Kolationsvertrag umsetzt und den Antibiotikamissbrauch in der Massentierhaltung beendest.\n";
 
-           let generatedText = "Lieber Cem,\nich möchte, dass Du den Kolationsvertrag umsetzt und den Antibiotikamissbrauch in der Massentierhaltung beendest.\n";
+            for (let i = 1; i <= 9; i++) {
+                const optionId = 'option' + i;
+                if (document.getElementById(optionId).checked) {
+                    generatedText += generateOptionText(optionId) + "\n";
+                }
+            }
+            generatedText += "\nIch hoffe Du hältst unser Wort,\nfreundliche Grüße\n";
+            generatedText += name + "\n" + functionValue + "\n" + location + "\n" + email + "\n";
 
-           for (let i = 1; i <= 9; i++) {
-               const optionId = 'option' + i;
-               if (document.getElementById(optionId).checked) {
-                   generatedText += generateOptionText(optionId) + "\n";
-               }
-           }
-           generatedText += "\nIch hoffe Du hältst unser Wort,\nfreundliche Grüße\n";
-           generatedText += name + "\n" + functionValue + "\n" + location + "\n" + email + "\n";
+            document.getElementById('message').value = generatedText;
+        }
 
-           document.getElementById('message').value = generatedText;
-       }
+        function sendEmail() {
+            var customMessage = document.getElementById('message').value;
+            var userEmail = document.getElementById('email').value;
+            var userName = document.getElementById('name').value;
+            var message = {
+                email: userEmail,
+                body: customMessage,
+                name: userName
+            };
 
-       function sendEmail() {
-           var customMessage = document.getElementById('message').value;
-           var userEmail = document.getElementById('email').value;
-           var userName = document.getElementById('name').value;
-           var message = {
-               email: userEmail,
-               body: customMessage,
-               name: userName
-           };
+            emailjs.send('service_3mrcdph', 'template_csw5pmj', message)
+            .then((response) => {
+                alert('Email erfolgreich gesendet!');
+            }, (error) => {
+                alert('Fehler beim Senden der Email: ' + error.text);
+            });
+        }
 
-           emailjs.send('service_3mrcdph', 'template_csw5pmj', message)
-           .then((response) => {
-               alert('Email erfolgreich gesendet!');
-           }, (error) => {
-               alert('Fehler beim Senden der Email: ' + error.text);
-           });
-       }
-
-       function toggleSendButton() {
-           const privacyCheck = document.getElementById('privacy-check').checked;
-           document.getElementById('send-button').disabled = !privacyCheck;
-       }
+        function toggleSendButton() {
+            const privacyCheck = document.getElementById('privacy-check').checked;
+            document.getElementById('send-button').disabled = !privacyCheck;
+        }
     </script>
 </head>
 <body>
